@@ -3,10 +3,10 @@ pipeline {
 	
 	
 	environment {
-		PROJECT_ID = 'gke-deployment-362011'
-                CLUSTER_NAME = 'cluster-2'
-                LOCATION = 'northamerica-northeast2-a'
-                CREDENTIALS_ID = 'Kubernetes'		
+		PROJECT_ID = 'cts05-murgod'
+                CLUSTER_NAME = 'blue-green'
+                LOCATION = 'us-central1'
+                CREDENTIALS_ID = 'kubernetes'		
 	}
 	
     stages {
@@ -23,7 +23,7 @@ pipeline {
 		    steps {
 			    sh 'whoami'
 			    script {
-				    myimage = docker.build("arjunmishra/demo-test:${env.BUILD_ID}")
+				    myimage = docker.build("thenameisnani/demo-test:${env.BUILD_ID}")
 			    }
 		    }
 	    }
@@ -32,8 +32,8 @@ pipeline {
 		    steps {
 			    script {
 				    echo "Push Docker Image"
-				    withCredentials([string(credentialsId: 'arjunmishra', variable: 'arjunmishra')]) {
-            				sh "docker login -u arjunmishra -p ${arjunmishra}"
+				    withCredentials([string(credentialsId: 'thenameisnani', variable: 'thenameisnani')]) {
+            				sh "docker login -u thenameisnani -p ${arjunmishra}"
 				    }
 				        myimage.push("${env.BUILD_ID}")
 				    
